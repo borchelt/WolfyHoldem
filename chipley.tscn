@@ -1,0 +1,154 @@
+[gd_scene load_steps=20 format=3 uid="uid://c72xvjgw0shx7"]
+
+[ext_resource type="Script" path="res://chipley.gd" id="1_rgaeg"]
+[ext_resource type="Texture2D" uid="uid://dqy0pswotc7a2" path="res://chippley/S/idle/Sprite-idle1.png" id="1_xn85u"]
+[ext_resource type="AudioStream" uid="uid://8gyvftkaucd1" path="res://media/sfx/chipley_hit_1.ogg" id="2_jyti0"]
+[ext_resource type="Texture2D" uid="uid://daetatgbpnaf2" path="res://chippley/S/idle/Sprite-idle.png" id="2_s4nxp"]
+[ext_resource type="AudioStream" uid="uid://bifikah5m20g6" path="res://media/sfx/chipley_hit_2.ogg" id="3_m7ocr"]
+[ext_resource type="Texture2D" uid="uid://cdcq6nykyeu01" path="res://chippley/S/idle/Sprite-idle2.png" id="3_njph1"]
+[ext_resource type="AudioStream" uid="uid://rsjn1pmvjtvo" path="res://media/sfx/chipley_hit_3.ogg" id="4_0ha38"]
+[ext_resource type="Texture2D" uid="uid://rcd1n8io8cc5" path="res://chippley/S/walk down/Sprite-0006.png" id="4_4g2i8"]
+[ext_resource type="Texture2D" uid="uid://x5g2mr33x1y0" path="res://chippley/S/walk down/Sprite-0007.png" id="5_ejhkc"]
+[ext_resource type="AudioStream" uid="uid://bit2htqqo7n4m" path="res://media/sfx/chipley_death_1.ogg" id="6_fcte0"]
+[ext_resource type="Texture2D" uid="uid://ces3y3jjhqevo" path="res://chippley/S/walk down/Sprite-idle.png" id="6_kgb2w"]
+[ext_resource type="AudioStream" uid="uid://jkr537ugg4i" path="res://media/sfx/chipley_death_2.ogg" id="7_8kxk2"]
+[ext_resource type="AudioStream" uid="uid://dpbr2gak88xxu" path="res://media/sfx/chipley_death_3.ogg" id="8_homsw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_btu2g"]
+radius = 7.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_guy8x"]
+animations = [{
+"frames": [{
+"duration": 4.0,
+"texture": ExtResource("1_xn85u")
+}, {
+"duration": 4.0,
+"texture": ExtResource("2_s4nxp")
+}, {
+"duration": 4.0,
+"texture": ExtResource("3_njph1")
+}, {
+"duration": 4.0,
+"texture": ExtResource("2_s4nxp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_4g2i8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ejhkc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_kgb2w")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="Curve" id="Curve_j6we4"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 6.59341), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_7kosk"]
+_data = [Vector2(0.0104712, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 0), -0.0538203, -0.0538203, 0, 0, Vector2(1, 0), -1.4447, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_6y17n"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0.0104712, -200), 0.0, 0.0, 0, 0, Vector2(0.643979, -200), 0.0, 0.0, 0, 0, Vector2(1, 178.022), 119.937, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_53udi"]
+_data = [Vector2(0.0157068, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Chipley" type="CharacterBody2D" node_paths=PackedStringArray("agent", "timer", "deathParticles", "hit", "audio")]
+wall_min_slide_angle = 0.0
+script = ExtResource("1_rgaeg")
+agent = NodePath("NavigationAgent2D")
+timer = NodePath("Timer")
+deathParticles = NodePath("Death")
+hit = NodePath("Hit")
+hitNoise1 = ExtResource("2_jyti0")
+hitNoise2 = ExtResource("3_m7ocr")
+hitNoise3 = ExtResource("4_0ha38")
+hitNoise4 = ExtResource("3_m7ocr")
+deathNoise1 = ExtResource("6_fcte0")
+deathNoise2 = ExtResource("7_8kxk2")
+deathNoise3 = ExtResource("8_homsw")
+audio = NodePath("AudioStreamPlayer2D")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_fcte0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.7, 0.7)
+shape = SubResource("CircleShape2D_btu2g")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
+position = Vector2(2, 0)
+scale = Vector2(2.3125, 2.125)
+sprite_frames = SubResource("SpriteFrames_guy8x")
+autoplay = "default"
+frame_progress = 0.497968
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 10.0
+path_postprocessing = 1
+avoidance_enabled = true
+radius = 5.0
+neighbor_distance = 50.0
+max_speed = 1.0
+debug_path_custom_point_size = 1.0
+
+[node name="Death" type="CPUParticles2D" parent="."]
+top_level = true
+z_index = 100
+emitting = false
+amount = 20
+lifetime = 0.3
+one_shot = true
+explosiveness = 0.76
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 300.0
+radial_accel_min = 10.0
+radial_accel_max = 100.0
+radial_accel_curve = SubResource("Curve_j6we4")
+scale_amount_min = 3.0
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_7kosk")
+color = Color(1, 0.976471, 1, 1)
+
+[node name="Hit" type="CPUParticles2D" parent="."]
+top_level = true
+z_index = 100
+emitting = false
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+local_coords = true
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 500.0
+linear_accel_max = 10.0
+linear_accel_curve = SubResource("Curve_6y17n")
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_53udi")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

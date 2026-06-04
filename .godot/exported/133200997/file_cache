@@ -1,0 +1,16 @@
+res://prefabs/card.tscn::285fd4d6d6c104bab2c780ed56904a8c::1761789540::res://.godot/exported/133200997/export-48192d57ff90d276bcbc9181c7866d61-card.scn
+res://scenes/table.tscn::7bbbee67ff3a43b1eea963e2209b33d0::1761789539::res://.godot/exported/133200997/export-cd696a2f98392b4b9bc4af9a0698fd3d-table.scn
+res://addons/texture_fonts/UI/Components/TextureViewer/TextureViewer.tscn::f7a686a01f4834d1337089058afee420::1760648928::res://.godot/exported/133200997/export-54888cedea5636033b00f34a398c7ef7-TextureViewer.scn
+res://addons/texture_fonts/UI/Components/CharSetting.tscn::b319aad161206db87dc61ed636b24520::1760648928::res://.godot/exported/133200997/export-72b4294d9a5abc436108deff716831e1-CharSetting.scn
+res://addons/texture_fonts/UI/Components/File.tscn::b007d503b5c0380cb30a38347693d444::1760648928::res://.godot/exported/133200997/export-59fb7b948d7278d3ec9c2644b55d4f28-File.scn
+res://addons/texture_fonts/UI/Components/KerningPair.tscn::07133b28a563e731c80c7882f3ae288a::1760648928::res://.godot/exported/133200997/export-8cbf6496ef3b2a1e6a28019f19f964cf-KerningPair.scn
+res://addons/texture_fonts/UI/Components/Vector2Edit.tscn::291d417fd63d71f9470a35170614c210::1760648928::res://.godot/exported/133200997/export-f3ca9f978dde18a032bba5fa06174b6d-Vector2Edit.scn
+res://addons/texture_fonts/UI/FontEditor.tscn::8e805aa39771d3f400cda4c01bfb07d1::1760648928::res://.godot/exported/133200997/export-2747ce288a65ec020de9014be8051508-FontEditor.scn
+res://addons/texture_fonts/UI/Mapping.tscn::1e8d4e6f2751639a0d75f2d098837d31::1760648928::res://.godot/exported/133200997/export-56460cbaad63017d7787111a4ec010dd-Mapping.scn
+res://addons/texture_fonts/UI/Settings.tscn::b429bfc1f2f66c1a56f64e2706344100::1760648928::res://.godot/exported/133200997/export-8a3c440ca4d6cca83a04894af3b93736-Settings.scn
+res://examples/numbers/cost_font.tres::2bbfd9127b0294258d51cf3a5634e16d::1760732325::res://.godot/exported/133200997/export-c1d494ddd675946124d965ace09d9ffa-cost_font.res
+res://examples/numbers/Numbers.tscn::d0e731e5a71082f0de0bac3aa47a800c::1760648928::res://.godot/exported/133200997/export-80c377e18b73373e86cd5e8a99a5a848-Numbers.scn
+res://examples/submitted_1/Submitted1.tscn::acf063da20d36e57424c3f1fe8f8f6a0::1760648928::res://.godot/exported/133200997/export-d672ac61e0cf768769a913a096d074e6-Submitted1.scn
+res://examples/submitted_1/TestFont.tres::aa3f4731c164af4763bfe6e01f670e07::1760648929::res://.godot/exported/133200997/export-d6cdda1a1e421c37707b32813a07dc0f-TestFont.res
+res://pixelFont.tres::450cc3d01df43249fcb998f5c99d0cd6::1761778130::res://.godot/exported/133200997/export-beb49ba77028afa52f9968c776612c46-pixelFont.res
+res://chipley.tscn::b91508a9797ec8e93fe29b6bc219d81d::1761789540::res://.godot/exported/133200997/export-ce930492675733ed46d9b49d0638be1e-chipley.scn

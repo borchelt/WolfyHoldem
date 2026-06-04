@@ -1,0 +1,78 @@
+[gd_scene load_steps=10 format=3 uid="uid://5k6k7tu6erpf"]
+
+[ext_resource type="Script" path="res://scenes/CardMaster.gd" id="1_jjhpk"]
+[ext_resource type="Texture2D" uid="uid://b4hrce4vaav3o" path="res://media/WolfyHoldemdraft_tileset.webp" id="2_5xh5y"]
+[ext_resource type="Script" path="res://prefabs/mousedetector.gd" id="2_pykud"]
+[ext_resource type="Script" path="res://scripts/CardRender.gd" id="3_go6nc"]
+[ext_resource type="Script" path="res://prefabs/mouseover.gd" id="5_cyhie"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y8lgk"]
+size = Vector2(20.8, 20.5714)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gx3qs"]
+resource_local_to_scene = true
+atlas = ExtResource("2_5xh5y")
+region = Rect2(64, 112, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jha1m"]
+resource_local_to_scene = true
+atlas = ExtResource("2_5xh5y")
+region = Rect2(17.75, 48, 13, 14.729)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwh5p"]
+resource_local_to_scene = true
+atlas = ExtResource("2_5xh5y")
+region = Rect2(208, 145, 12.427, 13.735)
+
+[node name="Card" type="Area2D" node_paths=PackedStringArray("bg")]
+z_index = 4
+position = Vector2(5, -6)
+script = ExtResource("1_jjhpk")
+suit = "Club"
+number = "3"
+bg = NodePath("RigidBody2D/CollisionShape2D/background")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+gravity_scale = 0.0
+lock_rotation = true
+max_contacts_reported = 4
+linear_damp = 5.275
+
+[node name="Control" type="Control" parent="RigidBody2D" node_paths=PackedStringArray("bg", "master", "rb")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -25.0
+offset_top = -9.0
+offset_right = 26.0
+offset_bottom = 62.0
+script = ExtResource("5_cyhie")
+bg = NodePath("../CollisionShape2D/background")
+master = NodePath("../..")
+rb = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(1, 27)
+scale = Vector2(2.5, 3.5)
+shape = SubResource("RectangleShape2D_y8lgk")
+script = ExtResource("2_pykud")
+
+[node name="background" type="Sprite2D" parent="RigidBody2D/CollisionShape2D" node_paths=PackedStringArray("SuitSprite", "NumberSprite", "master", "bg")]
+position = Vector2(8.7292e-07, 0.142857)
+scale = Vector2(0.645, 0.423)
+texture = SubResource("AtlasTexture_gx3qs")
+script = ExtResource("3_go6nc")
+SuitSprite = NodePath("Suit")
+NumberSprite = NodePath("Number")
+master = NodePath("../../..")
+bg = NodePath(".")
+
+[node name="Suit" type="Sprite2D" parent="RigidBody2D/CollisionShape2D/background"]
+position = Vector2(-4.34, 11.1549)
+texture = SubResource("AtlasTexture_jha1m")
+
+[node name="Number" type="Sprite2D" parent="RigidBody2D/CollisionShape2D/background"]
+position = Vector2(4.96, -11.831)
+texture = SubResource("AtlasTexture_pwh5p")
+
+[connection signal="mouse_entered" from="RigidBody2D/Control" to="RigidBody2D/Control" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="RigidBody2D/Control" to="RigidBody2D/Control" method="_on_mouse_exited"]

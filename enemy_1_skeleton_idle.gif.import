@@ -1,0 +1,15 @@
+[remap]
+
+importer="import_gif_to_sprite_frames"
+type="SpriteFrames"
+uid="uid://o0b5h3j4s7kw"
+path="res://.godot/imported/enemy_1_skeleton_idle.gif-294e389380033d50fb85a22160b5054f.tres"
+
+[deps]
+
+source_file="res://enemy_1_skeleton_idle.gif"
+dest_files=["res://.godot/imported/enemy_1_skeleton_idle.gif-294e389380033d50fb85a22160b5054f.tres"]
+
+[params]
+
+frames_per_second=1

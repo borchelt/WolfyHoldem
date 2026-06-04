@@ -1,0 +1,15 @@
+ColorRect
+Timer
+AudioStreamPlayer2D
+CPUParticles2D
+GPUParticles2D
+NavigationRegion2D
+Node
+NavigationAgent2D
+CharacterBody2D
+AnimatedSprite2D
+CollisionShape2D
+RigidBody2D
+TileMap
+TextureRect
+TextureButton

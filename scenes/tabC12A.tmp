@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cikclk7h338b5"]
+
+[ext_resource type="Script" path="res://scenes/deal.gd" id="1_seufc"]
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("button")]
+script = ExtResource("1_seufc")
+button = NodePath("Button")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 491.0
+offset_top = 467.0
+offset_right = 647.0
+offset_bottom = 543.0
+text = "Deal Another Hand"
+metadata/_edit_use_anchors_ = true

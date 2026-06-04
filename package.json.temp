@@ -1,0 +1,17 @@
+{
+  "name": "wolfy-holdem-server",
+  "version": "1.0.0",
+  "description": "Simple server that serves a page with 5 random poker cards (server-side)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.10",
+    "express-session": "^1.17.3"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}

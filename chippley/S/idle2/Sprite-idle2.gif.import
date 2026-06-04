@@ -1,0 +1,15 @@
+[remap]
+
+importer="import_gif_to_sprite_frames"
+type="SpriteFrames"
+uid="uid://inhf0vwdmux7"
+path="res://.godot/imported/Sprite-idle2.gif-447f7d0168c99188047f1ff9c6c33265.tres"
+
+[deps]
+
+source_file="res://chippley/S/idle2/Sprite-idle2.gif"
+dest_files=["res://.godot/imported/Sprite-idle2.gif-447f7d0168c99188047f1ff9c6c33265.tres"]
+
+[params]
+
+frames_per_second=30
