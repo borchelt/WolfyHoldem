@@ -1,4 +1,4 @@
-res://scenes/deal.gd
 res://scenes/table.tscn
-res://pixelFont.tres
 res://scenes/table.gdshader
+res://scenes/deal.gd
+res://chipley.gd

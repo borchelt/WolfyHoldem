@@ -33,7 +33,6 @@ enabled=PackedStringArray("res://addons/texture_fonts/plugin.cfg")
 
 theme/default_font_antialiasing=0
 theme/default_font_hinting=2
-theme/custom_font="res://pixelFont.tres"
 
 [rendering]
 

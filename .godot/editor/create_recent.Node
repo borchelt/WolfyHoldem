@@ -1,3 +1,4 @@
+Label
 ColorRect
 Timer
 AudioStreamPlayer2D
@@ -12,4 +13,3 @@ CollisionShape2D
 RigidBody2D
 TileMap
 TextureRect
-TextureButton

@@ -1,12 +1,12 @@
 4f2697819d239f202c87720cdcf79d2b
-::res://::1782746957
+::res://::1782754266
 chipley.gd::GDScript::2280140668304615345::1782744791::0::1::::Chipley<>CharacterBody2D<><>0<>0<><>::
 chipley.tscn::PackedScene::7076057038681165738::1782743062::0::1::::<><><>0<>0<><>::res://chipley.gd<>uid://dqy0pswotc7a2::::res://chippley/S/idle/Sprite-idle1.png<>uid://8gyvftkaucd1::::res://media/sfx/chipley_hit_1.ogg<>uid://daetatgbpnaf2::::res://chippley/S/idle/Sprite-idle.png<>uid://bifikah5m20g6::::res://media/sfx/chipley_hit_2.ogg<>uid://cdcq6nykyeu01::::res://chippley/S/idle/Sprite-idle2.png<>uid://rsjn1pmvjtvo::::res://media/sfx/chipley_hit_3.ogg<>uid://rcd1n8io8cc5::::res://chippley/S/walk down/Sprite-0006.png<>uid://x5g2mr33x1y0::::res://chippley/S/walk down/Sprite-0007.png<>uid://bit2htqqo7n4m::::res://media/sfx/chipley_death_1.ogg<>uid://ces3y3jjhqevo::::res://chippley/S/walk down/Sprite-idle.png<>uid://jkr537ugg4i::::res://media/sfx/chipley_death_2.ogg<>uid://dpbr2gak88xxu::::res://media/sfx/chipley_death_3.ogg
 enemy_1_skeleton_idle.gif::SpriteFrames::1034367956960253162::1782743062::1782743182::1::::<><><>0<>0<>65431318f803a56a5663172723979656<>res://.godot/imported/enemy_1_skeleton_idle.gif-294e389380033d50fb85a22160b5054f.tres::
 export_presets.cfg::TextFile::-1::1782743062::0::1::::<><><>0<>0<><>::
 icon.png::CompressedTexture2D::1258025749466318879::1782743062::1782743062::1::::<><><>0<>0<>a1d2d39fe3989c005767f8dc3582efb4<>res://.godot/imported/icon.png-487276ed1e3a0c39cad0279d744ee560.ctex::
 icon.svg::CompressedTexture2D::7131728445898272865::1782743062::1782743182::1::::<><><>0<>0<>8bcaca92b78525e656a44096d3cfc207<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-pixelFont.tres::FontFile/TextureFont::4759390375621636816::1782746826::0::1::::<><><>0<>0<><>::uid://cjuqh8vl26cuc::::res://addons/texture_fonts/Assets/placeholder.png<>uid://bc8hc7oog6y8c::::res://addons/texture_fonts/Classes/TextureFontSettings.gd<>uid://dr5cvt4nvic5i::::res://addons/texture_fonts/Classes/TextureFont.gd<>uid://b6n2fob8fblxf::::res://addons/texture_fonts/Classes/TextureFontMapping.gd<>uid://d4m6ovpwttjtk::::res://media/WH_TINY_FONT_WHITE3.png
+pixelFont.tres::FontFile/TextureFont::4759390375621636816::1782754263::0::1::::<><><>0<>0<><>::uid://cjuqh8vl26cuc::::res://addons/texture_fonts/Assets/placeholder.png<>uid://bc8hc7oog6y8c::::res://addons/texture_fonts/Classes/TextureFontSettings.gd<>uid://dr5cvt4nvic5i::::res://addons/texture_fonts/Classes/TextureFont.gd<>uid://b6n2fob8fblxf::::res://addons/texture_fonts/Classes/TextureFontMapping.gd<>uid://d4m6ovpwttjtk::::res://media/WH_TINY_FONT_WHITE3.png
 README.md::TextFile::-1::1782743062::0::1::::<><><>0<>0<><>::
 shader.gd::GDScript::4617566619620666995::1782743062::0::1::::<>RefCounted<><>0<>0<><>::
 ::res://addons/::1782743062
@@ -107,7 +107,7 @@ text1.png::CompressedTexture2D::1054546489726986491::1782743062::1782743062::1::
 godotgif.gdextension::GDExtension::8947153377425118281::1782743062::0::1::::<><><>0<>0<><>::
 LICENSE.txt::TextFile::-1::1782743062::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1782743062::0::1::::<><><>0<>0<><>::
-::res://godotgif/bin/::1782746955
+::res://godotgif/bin/::1782754264
 ::res://godotgif/bin/godotgif.macos.template_debug.framework/::1782743062
 ::res://godotgif/bin/godotgif.macos.template_release.framework/::1782743062
 ::res://media/::1782743182
@@ -179,12 +179,12 @@ YOU WUN.ogg::AudioStreamOggVorbis::265135862721565586::1782743062::1782743062::1
 card.tscn::PackedScene::2128210882445179415::1782743062::0::1::::<><><>0<>0<><>::res://scenes/CardMaster.gd<>uid://b4hrce4vaav3o::::res://media/WolfyHoldemdraft_tileset.webp<>res://prefabs/mousedetector.gd<>res://scripts/CardRender.gd<>res://prefabs/mouseover.gd
 mousedetector.gd::GDScript::7606853646188297936::1782743062::0::1::::<>CollisionShape2D<><>0<>0<><>::
 mouseover.gd::GDScript::8372099438976727252::1782743062::0::1::::<>Control<><>0<>0<><>::
-::res://scenes/::1782746896
+::res://scenes/::1782754263
 CardMaster.gd::GDScript::6815620903867360154::1782743062::0::1::::Card<>Area2D<><>0<>0<><>::
-deal.gd::GDScript::7653071494987135319::1782746329::0::1::::<>Node2D<><>0<>0<><>::
+deal.gd::GDScript::7653071494987135319::1782747444::0::1::::<>Node2D<><>0<>0<><>::
 loopmusic.gd::GDScript::8429073408895116557::1782743062::0::1::::<>AudioStreamPlayer2D<><>0<>0<><>::
-table.gdshader::Shader::8391829137053605126::1782746826::0::1::::<><><>0<>0<><>::
-table.tscn::PackedScene::5355137546773392580::1782746896::0::1::::<><><>0<>0<><>::uid://b4hrce4vaav3o::::res://media/WolfyHoldemdraft_tileset.webp<>uid://dhbg77vdbgmrf::::res://scenes/deal.gd<>uid://c32wrgrti11ti::::res://media/sfx/deal1.ogg<>uid://sy6rn8052unm::::res://media/sfx/deal2.ogg<>uid://cw46ehjnkmes5::::res://media/sfx/deal3.ogg<>uid://nmug7gku0uw::::res://media/sfx/deal 4.ogg<>uid://8fbfbq8pvpj5::::res://media/sfx/deal5.ogg<>uid://bu76lio5oj1t7::::res://media/sfx/deal6.ogg<>uid://uj2e348xi1wl::::res://media/sfx/deal7.ogg<>uid://c0stc16tfc57f::::res://media/sfx/deal8.ogg<>uid://bqs063g7j5dta::::res://media/sfx/deal9.ogg<>uid://bnp2ay2chujvl::::res://media/sfx/chips1.ogg<>uid://dyipsthnt4e2m::::res://media/sfx/chips2.ogg<>uid://bba8pnobiy5nw::::res://media/sfx/background_theme.ogg<>uid://bla8ril4e72wm::::res://media/sfx/chips3.ogg<>uid://dsdduwk2scpb6::::res://scenes/loopmusic.gd<>uid://cw2gvyejpe3hr::::res://media/sfx/chips4.ogg<>uid://ctvm7358v638::::res://media/buttons.png<>uid://c4r5qcnveqa2g::::res://media/sfx/chips5.ogg<>uid://co2j3i3xud5k1::::res://media/enemy_1_skeleton_idle.gif<>uid://cuph6qisp8be2::::res://media/sfx/chips6.ogg<>uid://dptmgi353hjjd::::res://media/sfx/chips7.ogg<>uid://d1o0p0vxiedm::::res://media/sfx/YOU WUN.ogg<>uid://24s2bxfkifnw::::res://media/sfx/you lose.ogg<>uid://drtcg187jbdqc::::res://scenes/table.gdshader<>uid://c6ce0dflyhf5s::::res://media/chippley/enemy_baseplate.png
+table.gdshader::Shader::8391829137053605126::1782754263::0::1::::<><><>0<>0<><>::
+table.tscn::PackedScene::5355137546773392580::1782754263::0::1::::<><><>0<>0<><>::uid://b4hrce4vaav3o::::res://media/WolfyHoldemdraft_tileset.webp<>uid://dhbg77vdbgmrf::::res://scenes/deal.gd<>uid://c32wrgrti11ti::::res://media/sfx/deal1.ogg<>uid://sy6rn8052unm::::res://media/sfx/deal2.ogg<>uid://cw46ehjnkmes5::::res://media/sfx/deal3.ogg<>uid://nmug7gku0uw::::res://media/sfx/deal 4.ogg<>uid://8fbfbq8pvpj5::::res://media/sfx/deal5.ogg<>uid://bu76lio5oj1t7::::res://media/sfx/deal6.ogg<>uid://uj2e348xi1wl::::res://media/sfx/deal7.ogg<>uid://c0stc16tfc57f::::res://media/sfx/deal8.ogg<>uid://bqs063g7j5dta::::res://media/sfx/deal9.ogg<>uid://bnp2ay2chujvl::::res://media/sfx/chips1.ogg<>uid://dyipsthnt4e2m::::res://media/sfx/chips2.ogg<>uid://bba8pnobiy5nw::::res://media/sfx/background_theme.ogg<>uid://bla8ril4e72wm::::res://media/sfx/chips3.ogg<>uid://dsdduwk2scpb6::::res://scenes/loopmusic.gd<>uid://cw2gvyejpe3hr::::res://media/sfx/chips4.ogg<>uid://ctvm7358v638::::res://media/buttons.png<>uid://c4r5qcnveqa2g::::res://media/sfx/chips5.ogg<>uid://co2j3i3xud5k1::::res://media/enemy_1_skeleton_idle.gif<>uid://cuph6qisp8be2::::res://media/sfx/chips6.ogg<>uid://dptmgi353hjjd::::res://media/sfx/chips7.ogg<>uid://d1o0p0vxiedm::::res://media/sfx/YOU WUN.ogg<>uid://24s2bxfkifnw::::res://media/sfx/you lose.ogg<>uid://drtcg187jbdqc::::res://scenes/table.gdshader<>uid://c6ce0dflyhf5s::::res://media/chippley/enemy_baseplate.png
 ::res://scripts/::1782743990
 CardRender.gd::GDScript::399788733219920287::1782743990::0::1::::<>Sprite2D<><>0<>0<><>::
 ::res://versions/::1782743065

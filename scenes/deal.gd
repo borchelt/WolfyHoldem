@@ -37,7 +37,10 @@ extends Node2D
 @export var Button100: TextureButton
 @export var ButtonClicker: AudioStreamPlayer2D
 @export var enemyMoneyLabel: Label
+@export var enemyBetLabel: Label
 var z = 0
+var playerHandText = ""
+var enemyHandText = ""
 var chipley = preload("res://chipley.tscn")
 var playerbetamt = 10
 var playerRaiseAmt = 0
@@ -84,13 +87,12 @@ func _ready():
 	Button20.button_group = group
 	Button50.button_group = group
 	Button100.button_group = group
+	updatePlayerMoney()
 
 func spawnEnemyChipley():
 	if(hasSetBet == false):
 		moveMoney(enemybet, "em")
-		enemyMoneyLabel.text = str(enemyMoney)
 		initBet()
-		wagerLabel.text = str(wagered)
 		hasSetBet = true
 func checkWinner():
 	if(stage == 0 && updatedplayermoney == false):
@@ -101,7 +103,6 @@ func checkWinner():
 		elif(chipleyWinner == "enemy" || folded == true):
 			enemybet=0
 			moveMoney(pot,"pot","em")
-			wagerLabel.text = str(wagered)
 			
 		else:
 			moveMoney(pot/2, "pot", "em")
@@ -181,9 +182,9 @@ func _process(delta):
 func initBet():
 	
 	var time = .04
-	if((pot / 10) > 25):
+	if((enemybet / 10) > 25):
 		time = 1/(pot/10)
-	for i in range(pot / 10 ):
+	for i in range(enemybet / 10 ):
 		newChipley("enemy") 
 		await get_tree().create_timer(time).timeout 
 #let players set bets
@@ -209,21 +210,20 @@ func tradePass():
 		tradesLeft = 0
 		
 		moveMoney(wagered,"empm")
-		enemyMoneyLabel.text = str(enemyMoney)
 		var time = .04
 		var totalOut = wagered + enemybet
 		if((totalOut / 10) > 25):
 			time = 1/(wagered/10)
 		#spawn chipleys
-		for i in range((totalOut) / 20):
+		for i in range((totalOut) / 10):
 			newChipley("player")
 			await get_tree().create_timer(time).timeout 
-		for i in range((wagered) / 20):
+		for i in range((wagered) / 10):
 			newChipley("enemy")
 			await get_tree().create_timer(time).timeout 
 		moveMoney(wagered, "w")
 		wagered = 0
-		wagerLabel.text = str(wagered)
+		updatePlayerMoney()
 	tradesLeft = 0
 	handCheck("enemy")
 	handCheck("player")
@@ -279,15 +279,14 @@ func bump():
 		# wagered - enemybet = player's wager 
 		# if wagered - enemybet > enemy money, enemy cant pay
 		
-		if(playerbetamt > enemyMoney):
-			playerbetamt = enemyMoney
+		if(wagered >= enemyMoney):
+			playerbetamt = (enemyMoney - wagered)
 		if(playerbetamt > playermoney):
 			playerbetamt = playermoney
 		playerRaiseAmt += playerbetamt
 		print(str('player has raised: ',playerRaiseAmt))
 		moveMoney(playerRaiseAmt, 'pm')
 		playerRaiseAmt = 0
-		wagerLabel.text = str(wagered)
 func deal():
 	if(tradesLeft > 0):
 		return
@@ -385,7 +384,6 @@ func trade():
 	if(pot < 10):
 		moveMoney(10, 'pm')
 	moveMoney(wagered, "empm")
-	enemyMoneyLabel.text = str(enemyMoney)
 	var totalOut = wagered+enemybet
 	for i in range(totalOut / 20):
 			newChipley("player")
@@ -394,7 +392,6 @@ func trade():
 			newChipley("enemy")
 			await get_tree().create_timer(.04).timeout 
 	moveMoney(wagered, "w")
-	wagerLabel.text = str(wagered)
 	var newCard = card.instantiate()
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
@@ -580,39 +577,48 @@ func handCheck(player, doBet = false):
 		var rng = RandomNumberGenerator.new()
 		if(enemyHand.bestSFlush > -1):
 			hand = "Straight FLUSH!!!!"
+			enemyHandText = hand
 			enemybet = playermoney
 		elif(enemyHand.bestFour > -1):
 			hand = "Four of a kind B|"
+			enemyHandText = hand
 			enemybet = playermoney
 		elif(enemyHand.bestHouse > -1):
 			hand = "Full House!"
+			enemyHandText = hand
 			var weights = [0.3,0.3,0.3,0.5,0.5,0.75,0.8,0.8,0.8,0.8,0.8,1]
 			enemybet = floor((playermoney)*weights[rng.randi_range(0,weights.size()-1)] / 10.0) * 10
 		elif(enemyHand.bestFlush > -1):
 			hand = "Flish"
+			enemyHandText = hand
 			var weights = [0.3,0.3,0.3,0.5,0.5,0.75,0.8,1]
 			enemybet = floor((playermoney)*weights[rng.randi_range(0,weights.size()-1)] / 10.0) * 10
 		elif(enemyHand.bestStraight > -1):
 			hand = "Straight"
+			enemyHandText = hand
 			var weights = [0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.5,0.5,0.75,0.8,1]
 			enemybet = floor((playermoney)*weights[rng.randi_range(0,weights.size()-1)] / 10.0) * 10
 		elif(enemyHand.bestThree > -1):
 			hand = "Three of a kind!"
+			enemyHandText = hand
 			var weights = [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.3,0.3,0.3,0.5,0.5,0.75,0.8,1]
 			enemybet = floor((playermoney)*weights[rng.randi_range(0,weights.size()-1)] / 10.0) * 10
 		elif(enemyHand.bestTwoPair > -1):
 			var weights = [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.3,0.3,0.3,0.5,0.5,0.75,0.8,1]
 			enemybet = floor((playermoney)*weights[rng.randi_range(0,weights.size()-1)] / 10.0) * 10
 			hand = "Two Pair"
+			enemyHandText = hand
 		elif(enemyHand.bestPair > -1):
 			var weights = [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.3,0.3,0.3,0.5,0.5,0.75,0.8,1]
 			enemybet = floor((playermoney)*weights[rng.randi_range(0,weights.size()-1)] / 10.0) * 10
 			hand = "Pair!"
+			enemyHandText = hand
 		else:
 			
 			var weights = [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.3,0.3,0.3]
 			enemybet = floor((playermoney)*weights[rng.randi_range(0,weights.size()-1)] / 10.0) * 10
 			hand = "nothing!"
+			enemyHandText = hand
 		if(enemybet < 10):
 			var newweights = [10, 0]
 			enemybet = newweights[rng.randi_range(0,1)]
@@ -627,30 +633,39 @@ func handCheck(player, doBet = false):
 	if(player == "player"):
 		if(patterns.bestSFlush > -1):
 			hand = "Straight FLISH!!!!"
+			playerHandText = hand
 			playerHand = 1000 + patterns.bestSFlush
 		elif(patterns.bestFour > -1):
 			hand = "Four of a kind B|"
+			playerHandText = hand
 			playerHand = 900 + patterns.bestFour
 		elif(patterns.bestHouse > -1):
 			hand = "Full House!"
+			playerHandText = hand
 			playerHand = 800 + patterns.bestHouse + patterns.bestPair
 		elif(patterns.bestFlush > -1):
 			hand = "Flish"
+			playerHandText = hand
 			playerHand = 700 + patterns.bestFlush
 		elif(patterns.bestStraight > -1):
 			hand = "Straight"
+			playerHandText = hand
 			playerHand = 600 + patterns.bestStraight
 		elif(patterns.bestThree > -1):
 			hand = "Three of a kind!"
+			playerHandText = hand
 			playerHand = 500 + patterns.bestThree
 		elif(patterns.bestTwoPair > -1):
 			hand = "Two Pair"
+			playerHandText = hand
 			playerHand = 400 + patterns.bestTwoPair
 		elif(patterns.bestPair > -1):
 			hand = "Pair!"
+			playerHandText = hand
 			playerHand = 300 + patterns.bestPair
 		else:
 			hand = "nothing!"
+			playerHandText = hand
 		
 		if(playerHand >= 600):
 			kickercheck = false
@@ -701,36 +716,61 @@ func handCheck(player, doBet = false):
 			mult = 2
 		else:
 			winner = "The House"
+		
 		if(stage == 4 && tradesLeft == 0 && player == "player"):
+			
 			if(winner == "Player"):
 				lastroundWinner = "player"
 			else:
 				lastroundWinner = "Enemy"
+			
 				
 			
 	if(folded == true):
 		winner = "Enemy"
-	updateLabel(hand, player, winner)
 	
-func updateLabel(hand = null, player = null,winner = null, team = null):
-	if(!hand && !player && !winner && team != "player"):
-		var audioRoulette = [chips2,chips3,chips4,chips5,chips6,chips7]
-		audioRoulette.shuffle()
-		chipAudio.stream = audioRoulette[0]
-		chipAudio.play()
-	var money = str(playermoney)
-	while(money.length() < 6):
-		money = str("0",money)
-	money = str(money)
-
-	var regex = RegEx.new()
-
-	regex.compile("\\d+")
-	wagerLabel.text = str(wagered)
-	if(hand):
-		label.text = hand
-	winloseAudio.pitch_scale = 1
+	updateHandLabel(enemyHandText, "enemy")
+	
+	updateHandLabel(playerHandText, "player")
 	if(stage == 4 && tradesLeft == 0):
+		updateWinnerLabel(hand, winner)
+	
+	
+func updateMoneyText(label, amount):
+		var oldText = label.text
+		var betText = str(amount)
+		var numDigits = betText.length()
+		
+		while(numDigits < 5):
+			betText = str(0,betText)
+			numDigits = betText.length()
+		
+		var newText = oldText.left(oldText.length()-numDigits)+betText
+		
+		
+		var safeNewText = newText
+		for i in range(oldText.length()):
+					print(newText)
+					print(oldText)
+					print("---------")
+					if(newText[newText.length()-1-i] != oldText[newText.length()-1-i]):
+						for p in range(4):
+							var random = randi() % 10
+							newText[newText.length()-1-i] = str(random)
+							label.text = newText
+							await get_tree().create_timer(.02).timeout 
+							chipAudio.play()
+						newText[newText.length()-1-i] = safeNewText[newText.length()-1-i]
+						label.text = newText
+						await get_tree().create_timer(.04).timeout 
+						chipAudio.stop()
+
+func updateHandLabel(hand, team):
+	if(team == "enemy"):
+		enemyLabel.text = hand
+	label.text = hand
+func updateWinnerLabel(hand, winner):
+		winloseAudio.pitch_scale=1
 		if(winner == "Player"):
 			match hand:
 				"Two Pair":
@@ -754,97 +794,21 @@ func updateLabel(hand = null, player = null,winner = null, team = null):
 			winloseAudio.stream = loseSound
 			winloseAudio.play()
 		winnerLabel.text = str(winner, " is Winning")
-	elif(player == "enemy"):
-		return
-	var oldMoneyText = moneyLabel.text
-	var moneyText = str(pot)
-	while(moneyText.length() < 5):
-		moneyText= str("0",moneyText)
+
+func updatePotLabel():
+	updateMoneyText(moneyLabel, pot)
+
+func updateWagerLabel():
+	updateMoneyText(wagerLabel, wagered)
+func updatePlayerMoney():
+	updateMoneyText(playermoneyLabel,playermoney)
+func updateEnemyBet(doBet = true):
+	if(doBet):
+		updateMoneyText(enemyBetLabel, enemybet)
+	updateMoneyText(enemyMoneyLabel, enemyMoney)
+
+		
 	
-	var safeMoneyText = moneyText
-	
-	if(stage == 1 && tradesLeft > 0):
-		for i in range(moneyText.length()):
-					if(moneyText[moneyText.length()-1-i] != oldMoneyText[moneyText.length()-1-i]):
-						for p in range(4):
-							var random = randi() % 10
-							moneyText[moneyText.length()-1-i] = str(random)
-							moneyLabel.text = moneyText
-							await get_tree().create_timer(.02).timeout 
-						
-							chipAudio.play()
-						moneyText[moneyText.length()-1-i] = safeMoneyText[moneyText.length()-1-i]
-						moneyLabel.text = moneyText
-						await get_tree().create_timer(.04).timeout 
-						chipAudio.stop()
-		if(player == "enemy"):
-			enemyLabel.text = str(hand)
-		else:
-			
-			var oldmoney = regex.search(playermoneyLabel.text).get_string()
-			if(oldmoney):
-				
-				var oldestmoney = oldmoney
-				
-				playermoneyLabel.text = str("$: ", oldestmoney)
-				#if(playermoney >= 100):
-					#audioRoulette.shuffle()
-					#chipAudio.stream = audioRoulette[0]
-					#chipAudio.play()
-				for i in range(oldestmoney.length()):
-					if(	oldestmoney[oldestmoney.length()-1-i] != money[oldestmoney.length()-1-i]):
-						for p in range(4):
-							var random = randi() % 10
-							oldestmoney[oldestmoney.length()-1-i] = str(random)
-							playermoneyLabel.text = str("$: ", oldestmoney)
-							await get_tree().create_timer(.02).timeout 
-							
-						oldestmoney[oldestmoney.length()-1-i] = money[oldestmoney.length()-1-i]
-						playermoneyLabel.text = str("$: ", oldestmoney)
-						await get_tree().create_timer(.04).timeout 
-			else:
-				playermoneyLabel.text = str("$: ",money)
-		regex.compile("\\d+")
-	else:
-		if(player == "enemy"):
-			enemyLabel.text = str(hand)
-		else:
-			
-			var oldmoney = regex.search(playermoneyLabel.text).get_string()
-			if(oldmoney):
-				
-				var oldestmoney = oldmoney
-				
-				playermoneyLabel.text = str("$: ", oldestmoney)
-				#if(playermoney >= 100):
-					#audioRoulette.shuffle()
-					#chipAudio.stream = audioRoulette[0]
-					#chipAudio.play()
-				for i in range(oldestmoney.length()):
-					if(	oldestmoney[oldestmoney.length()-1-i] != money[oldestmoney.length()-1-i]):
-						for p in range(4):
-							var random = randi() % 10
-							oldestmoney[oldestmoney.length()-1-i] = str(random)
-							playermoneyLabel.text = str("$: ", oldestmoney)
-							await get_tree().create_timer(.02).timeout 
-							
-						oldestmoney[oldestmoney.length()-1-i] = money[oldestmoney.length()-1-i]
-						playermoneyLabel.text = str("$: ", oldestmoney)
-						await get_tree().create_timer(.04).timeout 
-			else:
-				playermoneyLabel.text = str("$: ",money)
-			for i in range(moneyText.length()):
-					if(moneyText[moneyText.length()-1-i] != oldMoneyText[moneyText.length()-1-i]):
-						for p in range(4):
-							var random = randi() % 10
-							moneyText[moneyText.length()-1-i] = str(random)
-							moneyLabel.text = moneyText
-							
-						moneyText[moneyText.length()-1-i] = safeMoneyText[moneyText.length()-1-i]
-						moneyLabel.text = moneyText
-						await get_tree().create_timer(.04).timeout 
-						chipAudio.stop()
-		regex.compile("\\d+")
 func dealCard(num, pool, index: int = -1) -> String:
 	
 	if(num == 0):
@@ -993,21 +957,29 @@ func moveMoney(amount, from, to = null):
 	if(from == "w"):
 		wagered = wagered - amount
 		pot = pot+amount
+		updatePotLabel()
+		updateWagerLabel()
 	if(from == "em"):
 		enemyMoney = enemyMoney-amount
 		pot = pot+amount
+		updatePotLabel()
+		updateEnemyBet()
 	if(from == "pm"):
 		playermoney = playermoney-amount
 		wagered = wagered+amount
+		updateWagerLabel()
+		updatePlayerMoney()
 	if(from == "pot"):
 		if(to == null):
 			push_error("pot must have a to value")
 		elif(to=="pm"):
 			pot = pot-amount
 			playermoney = playermoney+amount
+			updatePlayerMoney()
 		elif(to=="em"):
 			pot = pot-amount
 			enemyMoney = enemyMoney+amount
+			updatePlayerMoney()
 	if(from == "empm"):
 		
 		#wagered = 10 from enemybet
@@ -1031,10 +1003,8 @@ func moveMoney(amount, from, to = null):
 		
 		#enemy loses money equal to amount raised by player 
 		wagered = wagered + dif
-		
-	enemyMoneyLabel.text = str(enemyMoney)
-	wagerLabel.text = str(wagered)
-	updateLabel()
+
+	
 	return from
 func _on_timer_timeout():
 	if(stage == 4):

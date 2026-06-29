@@ -130,11 +130,13 @@ func takeDamage(damage, vector, chip):
 		await get_tree().create_timer(.2).timeout
 		if(team == 'player'):
 			parent.enemyMoney += 10
+			parent.updateEnemyBet(false)
 		else:
 			parent.playermoney += 10
+			parent.updatePlayerMoney()
+			
 		parent.pot -=10
-		parent.updateLabel(null, null, null, team)
-		parent.enemyMoneyLabel.text = str(parent.enemyMoney)
+		parent.updatePotLabel()
 		queue_free()
 	else:
 		audio.stream = hitNoises.pick_random()
