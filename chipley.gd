@@ -83,7 +83,6 @@ func _on_timer_timeout():
 	elif(goal):
 		var changesincelastcheck = lastdist - position.distance_to(goal.global_position)
 		if(position.distance_to(goal.global_position) > 10 && changesincelastcheck < 1):
-			print("CHANGED TARGET")
 			goal = null
 			lastdist = null
 		else:
@@ -128,7 +127,6 @@ func takeDamage(damage, vector, chip):
 		audio.stream = deathNoises.pick_random()
 		audio.playing = true
 		deathParticles.emitting = true
-		print("DIED!!!")
 		await get_tree().create_timer(.2).timeout
 		if(team == 'player'):
 			parent.enemyMoney += 10

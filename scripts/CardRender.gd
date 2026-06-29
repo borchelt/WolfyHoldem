@@ -118,4 +118,3 @@ func flip():
 		var numberY = SpriteNumberMap[number][suitColor].Y
 		NumberSprite.texture.region = Rect2(numberX, numberY, 15, 15)
 		
-

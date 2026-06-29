@@ -1,8 +1,4 @@
+res://scenes/deal.gd
 res://scenes/table.tscn
 res://pixelFont.tres
-res://scenes/deal.gd
-res://chipley.gd
-res://scripts/CardRender.gd
 res://scenes/table.gdshader
-res://prefabs/card.tscn
-res://chipley.tscn

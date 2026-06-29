@@ -69,7 +69,7 @@ var chipleyWinner= null
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	
+	#connect everything
 	button.pressed.connect(deal)
 	tradeButton.pressed.connect(trade)
 	notradeButton.pressed.connect(tradePass)
@@ -85,22 +85,15 @@ func _ready():
 	Button50.button_group = group
 	Button100.button_group = group
 
-#handles the response time stuff
-func _process(delta):
-	#spawn enemy chipleys first
+func spawnEnemyChipley():
 	if(hasSetBet == false):
-		print("enemy money")
-		print(enemyMoney)
-		print(wagered)
 		moveMoney(enemybet, "em")
 		enemyMoneyLabel.text = str(enemyMoney)
 		initBet()
 		wagerLabel.text = str(wagered)
 		hasSetBet = true
-	#next check for winner of the battle
-	
+func checkWinner():
 	if(stage == 0 && updatedplayermoney == false):
-
 		z +=1
 		if(chipleyWinner == "player" && folded == false):
 			moveMoney(pot, "pot", "pm") 
@@ -111,7 +104,6 @@ func _process(delta):
 			wagerLabel.text = str(wagered)
 			
 		else:
-
 			moveMoney(pot/2, "pot", "em")
 			moveMoney(pot, "pot", "pm")
 		if(enemyMoney == 0):
@@ -119,11 +111,7 @@ func _process(delta):
 			enemyMoney = playermoney*2
 		updatedplayermoney == true
 		chipleyWinner = null
-	#update player money and unfold
-	if(stage == 1 && updatedplayermoney == false):
-		folded = false
-		updatedplayermoney = true
-	#if no trades, update ui
+func updateUINoTrades():
 	if(tradesLeft == 0):
 		if(chipleyWinner):
 			button.visible = true
@@ -142,12 +130,16 @@ func _process(delta):
 		bumpButton.visible = true
 		button.visible = false
 		foldbutton.visible = true
-	##check for deal cooldown
+func updatePlayerMoneyUnfold():
+	if(stage == 1 && updatedplayermoney == false):
+		folded = false
+		updatedplayermoney = true
+func dealCD(delta):
 	if(dealcd > 0.0):
 		dealcd -= 1.0*delta
 	else:
 		dealcd = 0
-	#once out of trades and hands, check all hands
+func checkBothHands():
 	if(stage == 4 && tradesLeft == 0 && checkedHand == false):
 		
 		handCheck("enemy")
@@ -161,7 +153,7 @@ func _process(delta):
 					child.flip()
 		
 		chipleyFight()
-	#change ui based on if the winner is up or not
+func updateUIForWinner():
 	if(stage == 4 && tradesLeft == 0):
 		winnerLabel.visible = true
 		enemyLabel.visible = true
@@ -169,13 +161,29 @@ func _process(delta):
 	else:
 		winnerLabel.visible = false
 		enemyLabel.visible = false
+#handles the response time stuff
+func _process(delta):
+	#spawn enemy chipleys first
+	spawnEnemyChipley()
+	#next check for winner of the battle
+	checkWinner()
+	#update player money and unfold
+	updatePlayerMoneyUnfold()
+	#if no trades, update ui
+	updateUINoTrades()
+	##check for deal cooldown
+	dealCD(delta)
+	#once out of trades and hands, check all hands
+	checkBothHands()
+	#change ui based on if the winner is up or not
+	updateUIForWinner()
 #spawns initial chipleys
 func initBet():
 	
 	var time = .04
-	if((wagered / 10) > 25):
-		time = 1/(wagered/10)
-	for i in range(wagered / 10 ):
+	if((pot / 10) > 25):
+		time = 1/(pot/10)
+	for i in range(pot / 10 ):
 		newChipley("enemy") 
 		await get_tree().create_timer(time).timeout 
 #let players set bets
@@ -203,16 +211,16 @@ func tradePass():
 		moveMoney(wagered,"empm")
 		enemyMoneyLabel.text = str(enemyMoney)
 		var time = .04
-		if((wagered / 10) > 25):
+		var totalOut = wagered + enemybet
+		if((totalOut / 10) > 25):
 			time = 1/(wagered/10)
 		#spawn chipleys
-		for i in range((wagered) / 20):
+		for i in range((totalOut) / 20):
 			newChipley("player")
 			await get_tree().create_timer(time).timeout 
-		for i in range((wagered - enemybet) / 20):
+		for i in range((wagered) / 20):
 			newChipley("enemy")
 			await get_tree().create_timer(time).timeout 
-		print("moneytopot")
 		moveMoney(wagered, "w")
 		wagered = 0
 		wagerLabel.text = str(wagered)
@@ -253,50 +261,32 @@ func chipleyFight():
 			if(lastroundWinner == child.team):
 				child.winner = true
 			child.timer.start()
-
-	#var playerChipleys = []
-	#var enemyChipleys = []
-	#var rng = RandomNumberGenerator.new()
-	#rng.randomize()
-	#for child in get_children():
-		#
-		#if(child is Chipley):
-			#if(child.team == "enemy"):
-				#enemyChipleys.push_front(child)
-				#enemyChipleys.shuffle()
-			#else:
-				#playerChipleys.push_front(child)
-				#playerChipleys.shuffle()
-				#
-	#for i in range(playerChipleys.size()):
-		#if(enemyChipleys.size() < 1):
-			#break 
-		#if(playerChipleys[i].goal == null):
-			#playerChipleys[i].goal = enemyChipleys[0]
-			#enemyChipleys.shuffle()
-	#for i in range(enemyChipleys.size()):
-		#if(playerChipleys.size() < 1):
-			#break 
-		#if(enemyChipleys[i].goal == null):
-			#enemyChipleys[i].goal = playerChipleys[0]
-			#playerChipleys.shuffle()
+func playChipSound():
+	var audioRoulette = [chips2,chips3,chips4,chips5,chips6,chips7]
+	audioRoulette.shuffle()
+	chipAudio.stream = audioRoulette[0]
+	chipAudio.play()
+	audioRoulette.pop_front()
 func bump():
-	if(tradesLeft != 0 && playermoney > wagered):
-		var audioRoulette = [chips2,chips3,chips4,chips5,chips6,chips7]
-		audioRoulette.shuffle()
-		chipAudio.stream = audioRoulette[0]
-		chipAudio.play()
-		audioRoulette.pop_front()
+	print("triedBump")
+	if(tradesLeft != 0 && playermoney >= playerbetamt):
+		playChipSound()
 		##player should only be able to raise up to the enemies remaining money 
 		#if(playerbetamt >= enemyMoney+enemybet):
 			#print("player bet over max")
 			#playerbetamt = enemyMoney-enemybet
+		#enemy bet amount + enemy money = all enemy money this round
+		# wagered - enemybet = player's wager 
+		# if wagered - enemybet > enemy money, enemy cant pay
+		
+		if(playerbetamt > enemyMoney):
+			playerbetamt = enemyMoney
 		if(playerbetamt > playermoney):
 			playerbetamt = playermoney
 		playerRaiseAmt += playerbetamt
 		print(str('player has raised: ',playerRaiseAmt))
 		moveMoney(playerRaiseAmt, 'pm')
-
+		playerRaiseAmt = 0
 		wagerLabel.text = str(wagered)
 func deal():
 	if(tradesLeft > 0):
@@ -392,19 +382,15 @@ func trade():
 	if(enemyMoney <= 0):
 		wagered = 0
 		return
-	if(playermoney <= 0):
-		wagered = 0
-		return
-	if(wagered < 10):
-		moveMoney(10, 'em')
+	if(pot < 10):
 		moveMoney(10, 'pm')
-		print("increased wager to 20")
 	moveMoney(wagered, "empm")
 	enemyMoneyLabel.text = str(enemyMoney)
-	for i in range(wagered / 20):
+	var totalOut = wagered+enemybet
+	for i in range(totalOut / 20):
 			newChipley("player")
 			await get_tree().create_timer(.04).timeout 
-	for i in range((wagered - enemybet) / 20):
+	for i in range((enemybet) / 20):
 			newChipley("enemy")
 			await get_tree().create_timer(.04).timeout 
 	moveMoney(wagered, "w")
@@ -627,16 +613,14 @@ func handCheck(player, doBet = false):
 			var weights = [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.3,0.3,0.3]
 			enemybet = floor((playermoney)*weights[rng.randi_range(0,weights.size()-1)] / 10.0) * 10
 			hand = "nothing!"
-		print(hand)
-		print(enemybet)
 		if(enemybet < 10):
-			print("enemy tried 0")
 			var newweights = [10, 0]
 			enemybet = newweights[rng.randi_range(0,1)]
 		if(playermoney == 0):
 			enemybet = 0
 		if(enemybet>enemyMoney):
 				enemybet = enemyMoney
+		enemybet=int(enemybet)
 	var kickercheck = true
 	if(doBet):
 		hasSetBet = false
@@ -1007,26 +991,21 @@ func moveMoney(amount, from, to = null):
 	#from pot to playermoney
 	
 	if(from == "w"):
-		print("moving money from wagered to pot")
 		wagered = wagered - amount
 		pot = pot+amount
 	if(from == "em"):
-		print("moving money from em to wagered")
 		enemyMoney = enemyMoney-amount
-		wagered = wagered+amount
+		pot = pot+amount
 	if(from == "pm"):
-		print("moving money from pm to wagered")
 		playermoney = playermoney-amount
 		wagered = wagered+amount
 	if(from == "pot"):
 		if(to == null):
 			push_error("pot must have a to value")
 		elif(to=="pm"):
-			print("moving money from pot to pm")
 			pot = pot-amount
 			playermoney = playermoney+amount
 		elif(to=="em"):
-			print("moving money from pot to em")
 			pot = pot-amount
 			enemyMoney = enemyMoney+amount
 	if(from == "empm"):
@@ -1041,26 +1020,17 @@ func moveMoney(amount, from, to = null):
 		#player loses money equal to amount wagered
 		var pdif = enemybet
 		
-		print(str("enemy bets: ", enemybet))
-		var dif = playerRaiseAmt-enemybet
 		
-		print("dif: ", dif)
+		var dif = wagered
 		if(dif < 0 ):
 			dif = 0
 		enemyMoney = enemyMoney-(dif)
 		if(playerRaiseAmt == 0):	
-			print("playerRaise is 0")
 			playermoney = playermoney-(enemybet)
 			wagered = wagered + enemybet
-			print(str("wagered: ", wagered))
 		
 		#enemy loses money equal to amount raised by player 
-		print(wagered)
-		
-		
-		print(str("player bets: ", playerRaiseAmt))
 		wagered = wagered + dif
-		print(str("total wagered ", wagered))
 		
 	enemyMoneyLabel.text = str(enemyMoney)
 	wagerLabel.text = str(wagered)
